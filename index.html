@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Билет</title>
+  <style>
+    /* Общие стили */
+    body {
+      background-color: #f0f3f8;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #5f5f5f; /* Изменяем цвет текста на #5f5f5f */
+    }
+
+    /* Блок 1 */
+    .block-1 {
+      padding: 1rem;
+    }
+    .scroll-container {
+      display: flex;
+      overflow-x: auto;
+      gap: 1rem;
+      -webkit-overflow-scrolling: touch; /* Для плавной прокрутки на iOS */
+      scrollbar-width: none; /* Убираем полосу прокрутки в Firefox */
+      -ms-overflow-style: none; /* Убираем полосу прокрутки в IE/Edge */
+    }
+    .scroll-container::-webkit-scrollbar {
+      display: none; /* Убираем полосу прокрутки в WebKit браузерах */
+    }
+    .block-1-1, .block-1-2 {
+      background-color: #ffffff;
+      border-radius: 10px;
+      min-width: 60%; /* Уменьшение ширины до 60% */
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+    }
+    .block-1-1 {
+      padding: 1rem; /* Оставляем стандартное значение для block-1-1 */
+    }
+    .block-1-2 {
+      padding: 0.4rem; /* Уменьшаем padding на 60% (1rem * 0.4 = 0.4rem) */
+      height: calc(100% - 20%); /* Уменьшаем высоту на 20% */
+      display: flex;
+      align-items: center;
+    }
+    .block-1-1 .icon, .block-1-2 .icon {
+      background-color: #00c400;
+      color: #ffffff;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 1rem;
+      flex-shrink: 0; /* Запрещаем уменьшение размера */
+    }
+    .block-1-2 .icon {
+      background-color: #ffd716;
+    }
+    .text {
+      width: 75%;
+      flex-grow: 1; /* Позволяет тексту занимать все доступное пространство */
+      font-size: calc(1rem - 1pt); /* Уменьшаем размер шрифта на 2pt */
+    }
+
+    /* Специальные стили для блока 1.1 и 1.2 */
+    .block-1-1 .text p:first-child,
+    .block-1-2 .text p:first-child {
+      font-size: calc(1rem + 1pt); /* Увеличиваем размер шрифта на 2pt для первого абзаца */
+      margin-bottom: 0.3rem; /* Уменьшаем отступ после заголовка */
+    }
+    .block-1-1 .text p:nth-child(2),
+    .block-1-2 .text p:nth-child(2) {
+      white-space: pre-wrap; /* Сохраняем переносы строк */
+      margin-bottom: 0; /* Убираем отступ снизу */
+    }
+
+    /* Блок 2 */
+    .block-2 {
+      background-color: #ffffff;
+      padding: 1rem;
+      text-align: center;
+    }
+    .block-2 img {
+      width: 90%;
+      height: auto;
+      transition: transform 1s ease-in-out; /* Добавляем переход для анимации */
+    }
+
+    /* Анимация flip на 360 градусов */
+    @keyframes flip {
+      from {
+        transform: rotateY(0deg);
+      }
+      to {
+        transform: rotateY(360deg);
+      }
+    }
+
+    /* Класс для активации анимации */
+    .flip-animation {
+      animation: flip 2s ease-in-out forwards;
+    }
+
+    /* Блок 3 */
+    .block-3 {
+      background-color: #ffffff;
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+    .block-3 .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem; /* Добавляем отступ между элементами */
+    }
+    .block-3 .left-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem; /* Добавляем отступ между элементами */
+    }
+    .button-like {
+      background-color: #f8d807;
+      padding: 0.5rem 1rem;
+      border-radius: 20px; /* Увеличиваем радиус скругления */
+      font-weight: bold;
+    }
+    .activated {
+      color: #333;
+      white-space: nowrap; /* Запрещаем перенос строки */
+      flex-shrink: 0; /* Запрещаем уменьшение размера */
+    }
+    .block-3 p {
+      margin-bottom: 0.5rem; /* Уменьшаем расстояние между строчками */
+    }
+    .block-3 .station-info {
+      margin-bottom: 1rem; /* Увеличиваем расстояние между строчками в 2 раза */
+    }
+    .block-3 .small-text {
+      font-size: calc(1rem - 2pt); /* Уменьшаем размер шрифта на 2pt для второй строки */
+    }
+
+    /* Блок 4 */
+    .block-4 {
+      background-color: #ffffff;
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+    .block-4 p:nth-child(1),
+    .block-4 p:nth-child(2) {
+      font-size: calc(1rem - 2pt); /* Уменьшаем размер шрифта на 2pt */
+    }
+    .block-4 p:nth-child(3) {
+      font-size: calc(1rem - 3pt); /* Уменьшаем размер шрифта на 4pt */
+    }
+
+    /* Блок 5 */
+    .block-5 {
+      background-color: #ffffff;
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+    .block-5 p:nth-child(2) span {
+      margin-right: 2rem; /* Увеличиваем расстояние между значениями времени в два раза */
+    }
+
+    /* Блок 6 */
+    .block-6 {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .block-6 button {
+      background-color: #ffffff;
+      border: 1px solid #156BB2;
+      padding: 1rem;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      text-align: center;
+      max-width: 75%; /* Уменьшаем ширину кнопок на 25% */
+      width: 100%;
+      margin: 0 auto; /* Центрируем кнопки */
+    }
+
+    /* Адаптивные стили */
+    @media (max-width: 600px) {
+      .block-1-1, .block-1-2 {
+        min-width: 80%; /* На мобильных устройствах устанавливаем ширину 80% */
+      }
+      .block-1 .text {
+        width: 100%;
+        flex-grow: 1; /* Позволяет тексту занимать все доступное пространство */
+        font-size: calc(1rem - 2pt); /* Уменьшаем размер шрифта на 2pt */
+      }
+      .block-1 .icon {
+        margin-left: 0;
+        margin-right: 1rem;
+      }
+      .block-2 img {
+        width: 100%;
+      }
+      .block-6 button {
+        font-size: 0.9rem;
+        max-width: 75%; /* Уменьшаем ширину кнопок на 25% для мобильных устройств */
+        width: 100%;
+        margin: 0 auto; /* Центрируем кнопки */
+      }
+      .block-3 .row {
+        flex-wrap: wrap; /* Разрешаем перенос элементов на новую строку */
+        justify-content: flex-start; /* Выравниваем элементы по левому краю */
+      }
+      .block-3 .button-like {
+        margin-bottom: 0.5rem; /* Добавляем отступ снизу для кнопки на маленьких экранах */
+      }
+      .block-3 .left-row {
+        flex-wrap: wrap; /* Разрешаем перенос элементов на новую строку */
+        justify-content: flex-start; /* Выравниваем элементы по левому краю */
+      }
+    }
+  </style>
+</head>
+<body>
+   <!-- Блок 1 -->
+  <div class="block-1">
+    <div class="scroll-container" id="scrollContainer">
+      <div class="block-1-1">
+        <div class="text">
+          <p><strong>Билет активирован</strong></p>
+          <p>Чтобы пройти на посадку,<br>поднесите расположенный ниже<br>ШТРИХ-код к сканеру на турникете.</p>
+        </div>
+        <div class="icon">!</div>
+      </div>
+      <div class="block-1-2">
+        <div class="text">
+          <p><strong>Для выхода со станции поднесите экран с билетом к турникету.</strong></p>
+        </div>
+        <div class="icon">!</div>
+      </div>
+    </div>
+  </div>
+  <!-- Блок 2 -->
+  <div class="block-2">
+    <img src="imgsrc.png" alt="Штрих-код" id="flipImage">
+  </div>
+  <!-- Блок 3 -->
+  <div class="block-3">
+    <p id="date-block-3"></p>
+    <div class="row small-text">
+      <div class="left-row">
+        <span class="button-like">Только туда</span>
+        <span class="activated">Активирован</span>
+      </div>
+    </div>
+    <div class="station-info">
+      <p style="margin-bottom: 0.5rem;"><strong>ФРЯЗИНО ПАССАЖИРСКАЯ</strong></p>
+      <p style="margin-top: 0.5rem; margin-bottom: 1rem;"><strong>МОСКВА (Ярославский вокзал)</strong></p> <!-- Добавлено увеличенное значение margin-bottom -->
+    </div>
+    <div class="row">
+      <span style="flex: 1;">Разовый полный</span>
+      <span>№ ПД 60089</span>
+    </div>
+    <p style="margin-top: 0.5rem;">Пассажирский</p>
+  </div>
+  <!-- Блок 4 -->
+  <div class="block-4">
+    <p id="purchase-date"></p>
+    <p id="activation-date"></p>
+    <p>Перевозчик: АО «Центральная ППК»</p>
+  </div>
+  <!-- Блок 5 -->
+  <div class="block-5">
+    <p><strong>Ближайшие электрички</strong></p>
+    <p>
+      <span>07:27</span>
+      <span>07:48</span>
+      <span>08:09</span>
+      <span>08:31</span>
+      <span>08:48</span>
+    </p>
+  </div>
+  <!-- Блок 6 -->
+  <div class="block-6">
+    <button>Получить чек об оплате</button>
+    <button>Повторить активацию</button>
+  </div>
+
+  <script>
+        // Функция для форматирования даты в нужный формат
+    function formatDate(date, formatType) {
+      const dayNames = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
+      const monthNames = [
+        "января", "февраля", "марта", "апреля", "мая", "июня",
+        "июля", "августа", "сентября", "октября", "ноября", "декабря"
+      ];
+
+      let day = date.getDate();
+      let month = monthNames[date.getMonth()];
+      let year = date.getFullYear();
+      let dayName = dayNames[date.getDay()];
+
+      if (formatType === 'block-3') {
+        return `${day} ${month}, ${dayName}`;
+      } else if (formatType === 'block-4') {
+        return `${day} ${month} ${year}`;
+      }
+    }
+
+    // Получение текущей даты
+    const currentDate = new Date();
+
+    // Установка дат для блока 3 и блока 4
+    document.getElementById('date-block-3').innerHTML = `<strong>${formatDate(currentDate, 'block-3')}</strong>`;
+    document.getElementById('purchase-date').innerHTML = `Дата покупки <strong>${formatDate(currentDate, 'block-4')}, 07:16</strong>`;
+    document.getElementById('activation-date').innerHTML = `Дата активации <strong>${formatDate(currentDate, 'block-4')}, 07:18</strong>`;
+
+    // Добавляем функциональность свайпа для блока прокрутки
+    const scrollContainer = document.getElementById('scrollContainer');
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    scrollContainer.addEventListener('mousedown', (e) => {
+      isDown = true;
+      scrollContainer.classList.add('active');
+      startX = e.pageX - scrollContainer.offsetLeft;
+      scrollLeft = scrollContainer.scrollLeft;
+    });
+    scrollContainer.addEventListener('mouseleave', () => {
+      isDown = false;
+      scrollContainer.classList.remove('active');
+    });
+    scrollContainer.addEventListener('mouseup', () => {
+      isDown = false;
+      scrollContainer.classList.remove('active');
+    });
+    scrollContainer.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - scrollContainer.offsetLeft;
+      const walk = (x - startX) * 2; // Скорость прокрутки
+      scrollContainer.scrollLeft = scrollLeft - walk;
+    });
+
+    // Поддержка свайпа на мобильных устройствах
+    scrollContainer.addEventListener('touchstart', (e) => {
+      isDown = true;
+      scrollContainer.classList.add('active');
+      startX = e.touches[0].pageX - scrollContainer.offsetLeft;
+      scrollLeft = scrollContainer.scrollLeft;
+    });
+    scrollContainer.addEventListener('touchend', () => {
+      isDown = false;
+      scrollContainer.classList.remove('active');
+    });
+    scrollContainer.addEventListener('touchmove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.touches[0].pageX - scrollContainer.offsetLeft;
+      const walk = (x - startX) * 2; // Скорость прокрутки
+      scrollContainer.scrollLeft = scrollLeft - walk;
+    });
+
+    // Функция для запуска анимации при клике на изображение
+    const flipImage = document.getElementById('flipImage');
+    flipImage.addEventListener('click', () => {
+      flipImage.classList.add('flip-animation');
+
+      // Удаляем класс после завершения анимации, чтобы можно было повторно запустить анимацию
+      flipImage.addEventListener('animationend', () => {
+        flipImage.classList.remove('flip-animation');
+      }, { once: true });
+    });
+  </script>
+</body>
+</html>
